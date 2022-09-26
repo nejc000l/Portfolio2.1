@@ -78,7 +78,7 @@ export const getStaticProps: GetStaticProps<Props> = async() => {
   const socials : Social[] = await fetchSocials();
   return{
     props:{
-      experience:experience??null,
+      experience,
       skills,
       projects,
       socials,
