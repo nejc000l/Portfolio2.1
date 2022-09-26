@@ -1,6 +1,5 @@
 import type { GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import About from "../components/About";
@@ -8,7 +7,7 @@ import WorkExperience from "../components/WorkExperience";
 import Projects from "../components/Projcets";
 import ContactMe from "../components/ContactMe";
 import Link from "next/link";
-import {Experience,PageInfo, Project, Skill, Social} from '../typings'
+import {Experience, Project, Skill, Social} from '../typings'
 import {fetchExperiences} from '../utils/fetchExperiences'
 import {fetchSkills} from '../utils/fetchSkills'
 import {fetchProjects} from '../utils/fetchProjects'
@@ -22,7 +21,7 @@ type Props = {
   projects:Project[];
   socials:Social[];
   }
-const Home = ({experience,skills,projects,socials}:Props) => {
+const Home = ({experience,projects,socials}:Props) => {
   return (
     <div
       className="bg-[rgb(36,36,36)] 
