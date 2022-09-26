@@ -4,6 +4,5 @@ export const fetchSocials = async () =>{
     const data = await res.json()
     const social:Social[]= data.socials;
 
-    console.log("fetching",social)
     return social
 }
