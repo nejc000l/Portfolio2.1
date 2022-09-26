@@ -16,5 +16,5 @@ export default async function handler(
     res:NextApiResponse<Data>,
 ){
     const experience:Experience[]= await sanityClient.fetch(query)
-    res.status(200).json(JSON.parse(JSON.stringify({experience})))
+    res.status(200).json({experience})
 }

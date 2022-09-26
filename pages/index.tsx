@@ -23,6 +23,7 @@ type Props = {
   socials:Social[];
   }
 const Home = ({experience,skills,projects,socials}:Props) => {
+  console.log(skills)
   return (
     <div
       className="bg-[rgb(36,36,36)] 
