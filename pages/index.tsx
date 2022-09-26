@@ -7,21 +7,21 @@ import WorkExperience from "../components/WorkExperience";
 import Projects from "../components/Projcets";
 import ContactMe from "../components/ContactMe";
 import Link from "next/link";
-import {Experience, Project, Skill, Social} from '../typings'
+import {Experience,PageInfo, Project, Skill, Social} from '../typings'
 import {fetchExperiences} from '../utils/fetchExperiences'
 import {fetchSkills} from '../utils/fetchSkills'
 import {fetchProjects} from '../utils/fetchProjects'
 import {fetchSocials} from '../utils/fetchSocials'
-
-
+import {fetchPageInfo} from '../utils//fetchPageInfo'
 
 type Props = {
   experience:Experience[];
   skills:Skill[];
   projects:Project[];
   socials:Social[];
+  pageInfo:PageInfo[];
   }
-const Home = ({experience,projects,socials}:Props) => {
+const Home = ({experience,projects,socials,pageInfo}:Props) => {
   return (
     <div
       className="bg-[rgb(36,36,36)] 
@@ -76,12 +76,15 @@ export const getStaticProps: GetStaticProps<Props> = async() => {
   const skills : Skill[] = await fetchSkills();
   const projects : Project[] = await fetchProjects();
   const socials : Social[] = await fetchSocials();
+  const pageInfo : PageInfo[]= await fetchPageInfo();
+
   return{
     props:{
       experience,
       skills,
       projects,
       socials,
+      pageInfo,
     },
     revalidate:10
   }
