@@ -3,6 +3,7 @@ export interface SanityBody{
     _id:string;
     _rev:string;
     _updatedAt:string;
+    body:[object];
 }
 export interface Image {
     _type:'image';
