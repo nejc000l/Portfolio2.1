@@ -1,4 +1,4 @@
-import type { GetStaticProps, NextPage } from "next";
+import type { GetStaticProps, NextApiRequest, NextApiResponse, NextPage } from "next";
 import Head from "next/head";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
@@ -13,15 +13,38 @@ import {fetchSkills} from '../utils/fetchSkills'
 import {fetchProjects} from '../utils/fetchProjects'
 import {fetchSocials} from '../utils/fetchSocials'
 import {fetchPageInfo} from '../utils//fetchPageInfo'
+import { sanityClient } from "../sanity";
+import { groq } from "next-sanity";
 
 type Props = {
   experience:Experience[];
-  skills:Skill[];
   projects:Project[];
+  skills:Skill[];
   socials:Social[];
-  pageInfo:PageInfo[];
   }
-const Home = ({experience,projects,socials,pageInfo}:Props) => {
+
+const query = groq`
+*[_type == "experience"]{
+    ...,
+    technologies[]->
+}
+`;
+
+const query2 = groq`
+*[_type == "project"]{
+    ...,
+    technologies[]->
+}
+`;
+const query3 = groq`
+*[_type == "skill"]
+`
+
+const query4 = groq`
+*[_type == "social"]
+`;
+const Home = ({experience,projects,socials}:Props) => {
+  
   return (
     <div
       className="bg-[rgb(36,36,36)] 
@@ -72,19 +95,20 @@ const Home = ({experience,projects,socials,pageInfo}:Props) => {
 export default Home;
 
 export const getStaticProps: GetStaticProps<Props> = async() => {
-  const experience : Experience[] = await fetchExperiences();
-  const skills : Skill[] = await fetchSkills();
-  const projects : Project[] = await fetchProjects();
-  const socials : Social[] = await fetchSocials();
-  const pageInfo : PageInfo[]= await fetchPageInfo();
-
+  const res = await sanityClient.fetch(query)
+  const experience:Experience[]= res
+  const res2= await sanityClient.fetch(query2)
+  const projects: Project[]=res2
+  const res3  = await sanityClient.fetch(query3)
+  const skills: Skill[]= res3
+  const res4 = await sanityClient.fetch(query4)
+  const socials: Social[]= res4
   return{
     props:{
       experience,
-      skills,
       projects,
-      socials,
-      pageInfo,
+      skills,
+      socials
     },
     revalidate:10
   }
